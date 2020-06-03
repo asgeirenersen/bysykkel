@@ -3,6 +3,8 @@ import React, {
   useState,
 } from 'react';
 
+import StationsService from './services/StationsService';
+
 import Waiting from './components/waiting/Waiting';
 import Stations from './components/stations/Stations';
 
@@ -14,23 +16,15 @@ function App() {
   const [loadingError, setLoadingErrorStatus] = useState(false);
 
   useEffect(() => {
-    fetch(
-      'https://gbfs.urbansharing.com/oslobysykkel.no/station_information.json',
-      {
-        method: 'GET',
-        headers: { 'Client-Identifier': 'Bike a Boogie'}
-      },
-    )
-    .then(response => response.json())
-    .then((body) => {
-      if (body.data.stations) {
-        setStations(body.data.stations);
-      }
-      setLoadingStatus(false);
-    })
-    .catch((error) => {
-      setLoadingErrorStatus(true);
-    })
+    StationsService
+      .getStationsWithStatus()
+      .then((stations) => {
+        setStations(stations);
+        setLoadingStatus(false);
+      })
+      .catch((error) => {
+        setLoadingErrorStatus(true);
+      })
   }, [isLoading, loadingError]);
 
   return (
