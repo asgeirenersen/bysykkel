@@ -3,7 +3,7 @@ body {
   color: #111;
 }
 
-.App-header {
+.header {
   background-color: #282c34;
   min-height: 20vh;
   display: flex;
@@ -13,8 +13,13 @@ body {
   font-size: calc(10px + 2vmin);
   color: white;
   text-align: center;
-}
 
-.App-link {
-  color: #61dafb;
+  h1 {
+    font-size: 1.5em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+    margin-block-start: 0em;
+  }
 }

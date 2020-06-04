@@ -8,7 +8,7 @@ import StationsService from './services/StationsService';
 import Waiting from './components/waiting/Waiting';
 import Stations from './components/stations/Stations';
 
-import './App.css';
+import './App.scss';
 
 function App() {
   const [stations, setStations] = useState([]);
@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="header">
         <h1>City Bikes</h1>
         <h2>Get it! Lock it! Beat it!</h2>
       </header>
