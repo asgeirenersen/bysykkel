@@ -1,4 +1,6 @@
 import React from 'react';
+import Station from './Station';
+import './Stations.scss';
 
 function Stations(props) {
     return (<div id="stations">
@@ -6,20 +8,7 @@ function Stations(props) {
         <ol>
             {
                 props.stations.map((station) => {
-                    const { name, address, status } = station;
-                    return (<li className="station" key={station.station_id}>
-                        <span className="stationName">
-                            {`${name}, ${address}`}
-                        </span>
-                        <span className="stationStatus">
-                            {
-                                station.status 
-                                    ? `Bikes: ${status.num_bikes_available}, docks: ${status.num_docks_available}`
-                                    : 'Status not available.'
-                            
-                            }
-                        </span>
-                    </li>);
+                    return (<Station station={station} key={station.station_id} />);
                 })
             }
         </ol>
