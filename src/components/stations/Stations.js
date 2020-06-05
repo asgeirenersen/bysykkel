@@ -1,5 +1,7 @@
 import React from 'react';
-import Station from './Station';
+import PropTypes from 'prop-types';
+
+import Station, {stationShape} from './Station';
 import './Stations.scss';
 
 function Stations(props) {
@@ -8,11 +10,15 @@ function Stations(props) {
         <ol>
             {
                 props.stations.map((station) => {
-                    return (<Station station={station} key={station.station_id} />);
+                    return (<Station station={station} key={station.station_id}/>);
                 })
             }
         </ol>
     </div>);
 }
+
+Stations.propTypes = {
+  stations: PropTypes.arrayOf(stationShape).isRequired,
+};
 
 export default Stations;

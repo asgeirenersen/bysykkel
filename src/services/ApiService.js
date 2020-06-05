@@ -4,7 +4,7 @@ const ApiService = {
             .then((response) => response.json())
             .catch((error) => {
                 window.console.error(error);
-                return { error };
+                return {error};
             })
 
     },
@@ -14,7 +14,7 @@ const ApiService = {
             'https://gbfs.urbansharing.com/oslobysykkel.no/station_information.json',
             {
                 method: 'GET',
-                headers: { 'Client-Identifier': 'Bike a Boogie'}
+                headers: {'Client-Identifier': 'Bike a Boogie'}
             },
         )
     },
@@ -24,7 +24,7 @@ const ApiService = {
             'https://gbfs.urbansharing.com/oslobysykkel.no/station_status.json',
             {
                 method: 'GET',
-                headers: { 'Client-Identifier': 'Bike a Boogie'}
+                headers: {'Client-Identifier': 'Bike a Boogie'}
             },
         )
     }
