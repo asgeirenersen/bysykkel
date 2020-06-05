@@ -1,0 +1,37 @@
+#stations {
+    width: 80%;
+    margin: 2vh auto 2vh auto;
+
+    ol {
+        padding-inline-start: 0;
+
+        li {
+            list-style-type: none;
+            padding: 3px;
+            margin: 3px;
+            border: 1px solid #323232;
+            background-color: lightskyblue;
+
+            &:hover {
+                background-color: lightcyan;
+            }
+        }
+    }
+}
+
+.station {
+    display: flex;
+    justify-content: space-between;
+
+    .stationStatus {
+        .statusItem {
+            display: inline-block;
+            margin: 0 0.75rem;
+            .statusValue {
+                display: inline-block;
+                min-width: 1.5rem;
+                text-align: right;
+            }
+        }
+    }
+}
