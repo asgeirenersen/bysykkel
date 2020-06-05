@@ -5,8 +5,9 @@ import React, {
 
 import StationsService from './services/StationsService';
 
-import Waiting from './components/waiting/Waiting';
+import LoadingError from './components/error/LoadingError';
 import Stations from './components/stations/Stations';
+import Waiting from './components/waiting/Waiting';
 
 import './App.scss';
 
@@ -22,9 +23,11 @@ function App() {
             .then((stations) => {
                 setStations(stations);
                 setLoadingStatus(false);
+                setLoadingErrorStatus(false);
             })
             .catch((error) => {
                 console.error(error);
+                setLoadingStatus(false);
                 setLoadingErrorStatus(true);
             })
     }, [isLoading, loadingError]);
@@ -37,9 +40,11 @@ function App() {
             </header>
             <main>
                 {
-                    isLoading && stations.length === 0
+                    isLoading
                         ? <Waiting/>
-                        : <Stations stations={stations}/>
+                        : loadingError
+                            ? <LoadingError />
+                            : <Stations stations={stations}/>
                 }
             </main>
         </div>

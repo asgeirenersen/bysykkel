@@ -1,7 +1,8 @@
 import React from 'react';
+import './Waiting.scss';
 
 function Waiting() {
-    return (<div>Loading data. Please wait.</div>);
+    return (<div className="waiting">Loading data. Please wait.</div>);
 }
 
 export default Waiting;
