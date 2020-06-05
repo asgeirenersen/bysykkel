@@ -2,7 +2,7 @@
 
 ## Installing and running
 
-To install and run you need [Node.js](https://nodejs.org).
+To install and run you need [Node.js](https://nodejs.org/en/download/).
 
 - Clone the repository and cd into root
 - Run `npm install`
