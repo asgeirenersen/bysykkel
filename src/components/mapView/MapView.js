@@ -5,16 +5,18 @@ import './MapView.scss';
 import {stationShape} from '../stations/Station';
 
 let mapInstance = null;
+let apiStatus = 'NOT_LOADED';
 const markerCache = {};
 
 function loadMapsApi(onReady) {
-    // Create the script tag, set the appropriate attributes
+    apiStatus = 'LOADING';
     const script = document.createElement('script');
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCk4M4fnv_rm7v2dSToQp1_ISpdf28gn24&callback=initMap';
     script.defer = true;
     script.async = true;
 
     window.initMap = function() {
+        apiStatus = 'LOADED';
         onReady();
     };
 
@@ -31,7 +33,7 @@ function createMap() {
 export function setMarkers(stations, selectedStationId) {
     const maps = window.google.maps;
     return stations.forEach((station) => {
-        const { station_id, name, address, lon, lat, status } = station;
+        const { station_id, name, address, lon, lat } = station;
         if (markerCache[station_id] === undefined) {
             markerCache[station_id] = new maps.Marker({
                 map: mapInstance,
@@ -39,8 +41,8 @@ export function setMarkers(stations, selectedStationId) {
                 position: {lat, lng: lon},
             });
         }
+        markerCache[station_id].setMap(mapInstance);
         if (station_id === selectedStationId) {
-            console.log('I should bounce!')
             markerCache[station_id].setAnimation(maps.Animation.BOUNCE);
         } else {
             markerCache[station_id].setAnimation(null);
@@ -59,22 +61,23 @@ function centerMap(stations, selectedStationId) {
 
 function MapView(props) {
     const { stations, selectedStationId, screenCategory } = props;
-    const [mapRendered, setMapRendered] = useState(false);
 
     useEffect(() => {
-        loadMapsApi(() => {
-            setMapRendered(true);
-            createMap();
-            setMarkers(stations, selectedStationId);
-        });
+        if (apiStatus === 'NOT_LOADED') {
+            loadMapsApi(() => {
+                createMap();
+                setMarkers(stations, selectedStationId);
+            });
+        }
     }, [true]);
 
     useEffect(() => {
-        if (mapInstance) {
+        if (window.google?.maps) {
+            createMap();
             setMarkers(stations, selectedStationId);
             centerMap(stations, selectedStationId);
         }
-    }, [selectedStationId]);
+    });
 
     return (<div id="MAP_WRAPPER" />);
 }
