@@ -11,6 +11,7 @@ const markerCache = {};
 function loadMapsApi(onReady) {
     apiStatus = 'LOADING';
     const script = document.createElement('script');
+    // The key should not have been committed. 
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCk4M4fnv_rm7v2dSToQp1_ISpdf28gn24&callback=initMap';
     script.defer = true;
     script.async = true;
@@ -30,12 +31,13 @@ function createMap() {
     });
 }
 
-export function setMarkers(stations, selectedStationId) {
+export function setMarkers(stations, selectedStationId, setSelectedStationId) {
     const maps = window.google.maps;
     return stations.forEach((station) => {
         const { station_id, name, address, lon, lat } = station;
         if (markerCache[station_id] === undefined) {
             markerCache[station_id] = new maps.Marker({
+                onClick: () => setSelectedStationId(station_id),
                 map: mapInstance,
                 title: `${name}, ${address}`,
                 position: {lat, lng: lon},
@@ -60,13 +62,13 @@ function centerMap(stations, selectedStationId) {
 }
 
 function MapView(props) {
-    const { stations, selectedStationId, screenCategory } = props;
+    const { stations, selectedStationId, screenCategory, setSelectedStationId } = props;
 
     useEffect(() => {
         if (apiStatus === 'NOT_LOADED') {
             loadMapsApi(() => {
                 createMap();
-                setMarkers(stations, selectedStationId);
+                setMarkers(stations, selectedStationId, setSelectedStationId);
             });
         }
     }, [true]);
