@@ -49,7 +49,7 @@ function onClick(event) {
 }
 
 function Station(props) {
-    const {station, selectedStationId, setSelectedStationId} = props;
+    const {station, selectedStationId, setSelectedStationId, mapView} = props;
     const {station_id, name, address, status} = station;
     const classNames = ['station'];
     if (selectedStationId === station_id) {
@@ -66,15 +66,18 @@ function Station(props) {
         key={station_id}
         onClick={onClick}
     >
-        <span className="stationName">
-            {`${name}, ${address}`}
-        </span>
-        {
-            station.status
-                ? <StationStatus status={status}/>
-                : <span className="statusNotAvailable">Status not available!</span>
+        <div className="stationInfo">
+            <span className="stationName">
+                {`${name}, ${address}`}
+            </span>
+            {
+                station.status
+                    ? <StationStatus status={status}/>
+                    : <span className="statusNotAvailable">Status not available!</span>
 
-        }
+            }
+        </div>
+        { mapView }
     </li>)
 }
 
@@ -82,6 +85,7 @@ Station.propTypes = {
     station: stationShape.isRequired,
     setSelectedStationId: PropTypes.func.isRequired,
     selectedStationId: PropTypes.string,
+    mapView: PropTypes.element,
 };
 
 export default Station;

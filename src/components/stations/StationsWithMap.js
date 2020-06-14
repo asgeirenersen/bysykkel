@@ -9,23 +9,31 @@ import './StationsWithMap.scss';
 
 function StationsWithMap(props) {
     const { stations, selectedStationId, screenCategory, setSelectedStationId } = props;
-    return (<div id="STATIONS_WITH_MAPS">
-        <Stations
-            stations={stations}
-            selectedStationId={selectedStationId}
-            setSelectedStationId={setSelectedStationId}
-        />
-        {
-            screenCategory === 'big'
-                ? <MapView
-                    key="THE_ONE_AND_ONLY_MAP"
-                    stations={stations}
-                    screenCategory={screenCategory}
-                    selectedStationId={selectedStationId}
-                />
-                : null
-        }
 
+    function getMapView() {
+        return (<MapView
+            key="THE_ONE_AND_ONLY_MAP"
+            stations={stations}
+            screenCategory={screenCategory}
+            selectedStationId={selectedStationId}
+        />);
+    }
+
+    return (<div id="STATIONS_WITH_MAPS" className={screenCategory}>
+        <h3>Stations</h3>
+        <div className="wrapper">
+            <Stations
+                stations={stations}
+                selectedStationId={selectedStationId}
+                setSelectedStationId={setSelectedStationId}
+                mapView={screenCategory === 'small' ? getMapView() : null}
+            />
+            {
+                screenCategory === 'big'
+                    ? getMapView()
+                    : null
+            }
+        </div>
     </div>);
 }
 

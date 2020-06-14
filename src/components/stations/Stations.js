@@ -5,17 +5,18 @@ import Station, {stationShape} from './Station';
 import './Stations.scss';
 
 function Stations(props) {
-    const { stations, selectedStationId, setSelectedStationId} = props;
+    const { stations, selectedStationId, setSelectedStationId, mapView } = props;
     return (<div id="STATIONS_WRAPPER">
-        <h3>Stations</h3>
         <ol className="stationsList">
             {
                 stations.map((station) => {
+                    const showMap = selectedStationId === station.station_id && mapView !== null;
                     return (<Station
                         station={station}
                         key={station.station_id}
                         setSelectedStationId={setSelectedStationId}
                         selectedStationId={selectedStationId}
+                        mapView={showMap ? mapView : null}
                     />);
                 })
             }
@@ -27,6 +28,7 @@ Stations.propTypes = {
     stations: PropTypes.arrayOf(stationShape).isRequired,
     setSelectedStationId: PropTypes.func.isRequired,
     selectedStationId: PropTypes.string,
+    mapView: PropTypes.element,
 };
 
 export default Stations;

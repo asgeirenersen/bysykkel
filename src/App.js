@@ -12,7 +12,7 @@ import Waiting from './components/waiting/Waiting';
 import './App.scss';
 
 export function getScreenCategoryFromWidth() {
-    return window.innerWidth > 800 ? 'big' : 'small';
+    return window.innerWidth > 1024 ? 'big' : 'small';
 }
 
 function App() {
