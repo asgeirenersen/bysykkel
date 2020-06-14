@@ -1,29 +1,36 @@
-#stations {
-    width: 80%;
-    margin: 2vh auto 2vh auto;
-
-    ol {
-        padding-inline-start: 0;
-
-        li {
-            list-style-type: none;
-            padding: 3px;
-            margin: 3px;
-            border: 1px solid #323232;
-            background-color: lightskyblue;
-
-            &:hover {
-                background-color: lightcyan;
-            }
-        }
-    }
+.stationsList {
+    width: 100%;
+    padding-inline-start: 0;
+    margin-top: 0;
 }
 
 .station {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+
+    list-style-type: none;
+    padding: 3px;
+    margin: 3px;
+    border: 1px solid #323232;
+    background-color: lightskyblue;
+
+    &:hover {
+        background-color: lightcyan;
+    }
+
+    &.selected {
+        background-color: lightcyan;
+    }
+
+    .stationInfo {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
 
     .stationStatus {
+        min-width: 150px;
+
         .statusItem {
             display: inline-block;
             margin: 0 0.75rem;

@@ -1,6 +1,6 @@
-import ApiService from './ApiService';
+import ApiService from './apiService/ApiService';
 
-function addStatusToStations(stationsList, stationsStatusList) {
+export function addStatusToStations(stationsList, stationsStatusList) {
     const statuses = stationsStatusList.slice(0);
     const stations = stationsList.slice(0);
 
@@ -25,11 +25,11 @@ function stationSorter(station1, station2) {
 }
 
 const StationsService = {
-    async getStationsWithStatus() {
+    async fetchStationsAndStatusLists() {
         let stations;
         let stationsStatus;
 
-        await Promise.all([
+        return Promise.all([
             ApiService
                 .fetchStations()
                 .then((response) => {
@@ -44,7 +44,15 @@ const StationsService = {
                         stationsStatus = response.data.stations;
                     }
                 }),
-        ]);
+        ])
+            .catch((error) => {
+                console.error(error);
+            })
+            .then(() => ({ stations, stationsStatus }));
+    },
+
+    async getStationsWithStatus() {
+        const { stations, stationsStatus } = await this.fetchStationsAndStatusLists();
 
         if (stations && stationsStatus) {
             return addStatusToStations(stations, stationsStatus);
