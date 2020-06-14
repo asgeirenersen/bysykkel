@@ -1,0 +1,20 @@
+#STATIONS_WITH_MAPS {
+  max-width: 90%;
+  margin: 2vh auto 2vh auto;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+#STATIONS_WRAPPER {
+  width: 45vw;
+}
+
+#MAP_WRAPPER {
+  margin-left: 10px;
+  width: 45vw;
+  max-height: 45vw;
+}
+
+

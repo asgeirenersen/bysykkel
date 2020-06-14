@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes  from 'prop-types';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -40,10 +40,32 @@ StationStatus.propTypes = {
     status: statusShape,
 };
 
+let clickHandler;
+function onClick(event) {
+    if (clickHandler) {
+        const stationId = event.currentTarget.dataset.station_id;
+        clickHandler(stationId);
+    }
+}
+
 function Station(props) {
-    const {station} = props;
-    const {name, address, status} = station;
-    return (<li className="station" key={station.station_id}>
+    const {station, selectedStationId, setSelectedStationId} = props;
+    const {station_id, name, address, status} = station;
+    const classNames = ['station'];
+    if (selectedStationId === station_id) {
+        classNames.push('selected');
+    }
+
+    useEffect(() => {
+        clickHandler = setSelectedStationId;
+    }, [setSelectedStationId]);
+
+    return (<li
+        data-station_id={station_id}
+        className={classNames.join(' ')}
+        key={station_id}
+        onClick={onClick}
+    >
         <span className="stationName">
             {`${name}, ${address}`}
         </span>
@@ -58,6 +80,8 @@ function Station(props) {
 
 Station.propTypes = {
     station: stationShape.isRequired,
+    setSelectedStationId: PropTypes.func.isRequired,
+    selectedStationId: PropTypes.string,
 };
 
 export default Station;

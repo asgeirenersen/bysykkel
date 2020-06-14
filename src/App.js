@@ -6,13 +6,19 @@ import React, {
 import StationsService from './services/StationsService';
 
 import LoadingError from './components/error/LoadingError';
-import Stations from './components/stations/Stations';
+import StationsWithMap from './components/stations/StationsWithMap';
 import Waiting from './components/waiting/Waiting';
 
 import './App.scss';
 
+export function getScreenCategoryFromWidth() {
+    return window.innerWidth > 800 ? 'big' : 'small';
+}
+
 function App() {
+    const [screenCategory, setScreenCategory] = useState(getScreenCategoryFromWidth());
     const [stations, setStations] = useState([]);
+    const [selectedStationId, setSelectedStationId] = useState();
     const [isLoading, setLoadingStatus] = useState(true);
     const [loadingError, setLoadingErrorStatus] = useState(false);
 
@@ -32,6 +38,17 @@ function App() {
             })
     }, [isLoading, loadingError]);
 
+    useEffect(() => {
+        const handler = () => {
+            setScreenCategory(getScreenCategoryFromWidth());
+        };
+        window.addEventListener('resize', handler);
+
+        return () => {
+            window.removeEventListener('resize', handler);
+        }
+    }, [screenCategory]);
+
     return (
         <div className="App">
             <header className="header">
@@ -44,7 +61,12 @@ function App() {
                         ? <Waiting/>
                         : loadingError
                             ? <LoadingError />
-                            : <Stations stations={stations}/>
+                            : <StationsWithMap
+                                stations={stations}
+                                screenCategory={screenCategory}
+                                selectedStationId={selectedStationId}
+                                setSelectedStationId={setSelectedStationId}
+                                />
                 }
             </main>
         </div>

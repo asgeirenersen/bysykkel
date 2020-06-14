@@ -1,20 +1,20 @@
-#stations {
-    width: 80%;
-    margin: 2vh auto 2vh auto;
+.stationsList {
+    width: 100%;
+    padding-inline-start: 0;
 
-    ol {
-        padding-inline-start: 0;
+    li {
+        list-style-type: none;
+        padding: 3px;
+        margin: 3px;
+        border: 1px solid #323232;
+        background-color: lightskyblue;
 
-        li {
-            list-style-type: none;
-            padding: 3px;
-            margin: 3px;
-            border: 1px solid #323232;
-            background-color: lightskyblue;
+        &:hover {
+            background-color: lightcyan;
+        }
 
-            &:hover {
-                background-color: lightcyan;
-            }
+        &.selected {
+            background-color: lightcyan;
         }
     }
 }
